@@ -112,8 +112,8 @@ export function newProject({
       // Temporary hack to prevent installing with `--frozen-lockfile`
       if (isCI && packageManager === 'pnpm') {
         updateFile(
-          '.npmrc',
-          'prefer-frozen-lockfile=false\nstrict-peer-dependencies=false\nauto-install-peers=true'
+          '.pnpmrc',
+          'frozen-lockfile=false\nstrict-peer-dependencies=false\nauto-install-peers=true'
         );
       }
 
@@ -212,7 +212,7 @@ ${
 // pnpm v7 sadly doesn't automatically install peer dependencies
 export function addPnpmRc() {
   updateFile(
-    '.npmrc',
+    '.pnpmrc',
     'strict-peer-dependencies=false\nauto-install-peers=true'
   );
 }
@@ -557,8 +557,8 @@ export function newLernaWorkspace({
         })
       );
       updateFile(
-        '.npmrc',
-        'prefer-frozen-lockfile=false\nstrict-peer-dependencies=false\nauto-install-peers=true'
+        '.pnpmrc',
+        'frozen-lockfile=false\nstrict-peer-dependencies=false\nauto-install-peers=true'
       );
     }
 
