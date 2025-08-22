@@ -1,7 +1,8 @@
 {
   "name": "astro-docs",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "comment": "package.json#scripts runs in the project root directory with astro assumes is where the node_modules is. which fails. so run the scripts in project.json#targets with --root command instead",
   "targets": {
-    "comment": "package.json#scripts runs in the project root directory with astro assumes is where the node_modules is. which fails. so run the scripts in project.json#targets with --root command instead",
     "serve": {
       "continuous": true,
       "dependsOn": [
@@ -45,6 +46,13 @@
       "options": {
         "cwd": "astro-docs"
       }
+    },
+    "pw-e2e": {
+      "dependsOn": ["serve"],
+      "parallelism": true
+    },
+    "e2e-ci--**/*": {
+      "dependsOn": ["preview"]
     }
   }
 }
