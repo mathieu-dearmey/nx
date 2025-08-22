@@ -204,6 +204,11 @@ export const sidebar: StarlightUserConfig['sidebar'] = [
     autogenerate: { directory: 'enterprise', collapsed: true },
   },
   {
+    label: 'Extending Nx',
+    collapsed: true,
+    autogenerate: { directory: 'extending-nx', collapsed: true },
+  },
+  {
     label: 'Reference',
     collapsed: false,
     autogenerate: { directory: 'reference', collapsed: true },
