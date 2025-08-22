@@ -1549,9 +1549,9 @@ importers:
       '@nx/graph-internal-ui-project-details':
         specifier: 'workspace:'
         version: link:../ui-project-details
-      '@nx/graph-internal-ui-theme':
+      '@nx/graph-internal-ui-render-config':
         specifier: 'workspace:'
-        version: link:../ui-theme
+        version: link:../ui-render-config
       '@nx/graph-migrate':
         specifier: 'workspace:'
         version: link:../migrate
@@ -1567,7 +1567,7 @@ importers:
     devDependencies:
       jest:
         specifier: ^29.4.1
-        version: 29.7.0(@types/node@24.2.0)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@swc/core@1.5.7(@swc/helpers@0.5.17))(@types/node@24.2.0)(typescript@5.8.3))
+        version: 29.7.0(@types/node@20.16.10)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@swc/core@1.5.7(@swc/helpers@0.5.17))(@types/node@20.16.10)(typescript@5.8.3))
 
   graph/migrate:
     dependencies:
@@ -1587,9 +1587,9 @@ importers:
       '@nx/graph-internal-ui-project-details':
         specifier: workspace:*
         version: link:../ui-project-details
-      '@nx/graph-internal-ui-theme':
+      '@nx/graph-internal-ui-render-config':
         specifier: workspace:*
-        version: link:../ui-theme
+        version: link:../ui-render-config
       '@nx/graph-shared':
         specifier: workspace:*
         version: link:../shared
@@ -1599,7 +1599,7 @@ importers:
     devDependencies:
       jest:
         specifier: ^29.4.1
-        version: 29.7.0(@types/node@20.16.10)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@swc/core@1.5.7(@swc/helpers@0.5.17))(@types/node@20.16.10)(typescript@5.8.3))
+        version: 29.7.0(@types/node@24.2.0)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@swc/core@1.5.7(@swc/helpers@0.5.17))(@types/node@24.2.0)(typescript@5.8.3))
 
   graph/shared: {}
 
@@ -1642,7 +1642,7 @@ importers:
         specifier: ^29.4.1
         version: 29.7.0(@types/node@24.2.0)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@swc/core@1.5.7(@swc/helpers@0.5.17))(@types/node@24.2.0)(typescript@5.8.3))
 
-  graph/ui-theme:
+  graph/ui-render-config:
     dependencies:
       '@nx/graph-shared':
         specifier: 'workspace:'
