@@ -15,6 +15,7 @@ test('Sidebar links render content', async ({ page }) => {
 
   // TODO: get all the collapsed link items too
   const links = await sidebar.getByRole('link').all();
+  const seenLinks = new Set<string>();
 
   for (const sidebarItem of links) {
     const name = await sidebarItem.textContent();
@@ -33,17 +34,31 @@ test('Sidebar links render content', async ({ page }) => {
         await Promise.all(outbounds.map((link) => link.getAttribute('href'))),
       );
 
+      console.log('Links to visit', Array.from(linkSet));
+
       for (const outboundLink of Array.from(linkSet)) {
         if (outboundLink.startsWith('http') || outboundLink.startsWith('#')) {
           // external link or a fragment link
           continue;
         }
+
+        if (seenLinks.has(outboundLink)) {
+          console.log('Already seen link, skipping', outboundLink);
+          continue;
+        }
+        seenLinks.add(outboundLink);
         await page.goto(outboundLink);
 
         // astros 404 page in dev
-        await expect(page.getByText('404: not found')).toBeHidden();
+        await expect(
+          page.getByText('404: not found'),
+          `Trying to visit ${outboundLink}, but found Astro dev server 404 page. Came from ${name} doc.`,
+        ).toBeHidden();
         // nx.dev 404 page
-        await expect(page.getByText('Page not found')).toBeHidden();
+        await expect(
+          page.getByText('Page not found'),
+          `Trying to visit ${outboundLink}, but found Nx Dev 404 page. Came from ${name} doc.`,
+        ).toBeHidden();
       }
     });
   }
