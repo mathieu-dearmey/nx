@@ -16,7 +16,7 @@ As teams and codebases grow, productivity bottlenecks multiply: build times incr
 
 Nx is built in a modular fashion, allowing you to adopt as little or as much as you'd like at any moment in your development lifecycle. You can **start with just the core and add additional capabilities incrementally** as your needs grow and complexity increases.
 
-At the **foundation is Nx Core**, a Rust-based, technology-agnostic task runner. Nx Core creates a knowledge graph of your workspace, understanding project relationships and dependencies. This enables highly optimized and fast task execution regardless of technology stack. It runs `package.json` scripts in [TypeScript monorepos](/docs/technologies/typescript/introduction) or Gradle tasks in [Java projects](/docs/technologies/java/introduction) or [can be extended](/extending-nx/intro/getting-started) to meet your project's specific needs.
+At the **foundation is Nx Core**, a Rust-based, technology-agnostic task runner. Nx Core creates a knowledge graph of your workspace, understanding project relationships and dependencies. This enables highly optimized and fast task execution regardless of technology stack. It runs `package.json` scripts in [TypeScript monorepos](/docs/technologies/typescript/introduction) or Gradle tasks in [Java projects](/docs/technologies/java/introduction) or [can be extended](/docs/extending-nx/intro) to meet your project's specific needs.
 
 {% callout type="deepdive" title="What do you mean by \"running NPM scripts\"?" %}
 
@@ -58,7 +58,11 @@ From there, you can gradually enhance your setup by adding features like [task c
 
 {% /callout %}
 
-Nx Core provides everything you need to get started and works perfectly on its own. **When you're ready for more, the Nx platform offers additional capabilities you can adopt incrementally**. Extend your setup with [**Nx Cloud**](/ci) for remote caching, distributed task execution, and [**AI-powered self-healing CI**](/ci/features/self-healing-ci) that automatically detects, analyzes, and fixes CI failures. Integrate [**Nx Console**](/docs/getting-started/editor-setup) with your editor for powerful autocomplete, project graph visualization, CI notifications, and an MCP to [make your AI coding assistant smarter](/features/enhance-AI). Add [**Nx Plugins**](/technologies) for technology-specific automation and DX improvements, or build custom platform capabilities using [Nx Devkit](/extending-nx/intro/getting-started).
+Nx Core provides everything you need to get started and works perfectly on its own. 
+**When you're ready for more, the Nx platform offers additional capabilities you can adopt incrementally**. 
+Extend your setup with [**Nx Cloud**](/docs/getting-started/nx-cloud) for remote caching, distributed task execution, and [**AI-powered self-healing CI**](/docs/features/ci-features/self-healing-ci) that automatically detects, analyzes, and fixes CI failures. 
+Integrate [**Nx Console**](/docs/getting-started/editor-setup) with your editor for powerful autocomplete, project graph visualization, CI notifications, and an MCP to [make your AI coding assistant smarter](/docs/features/enhance-ai). 
+Add [**Nx Plugins**](/docs/technologies) for technology-specific automation and DX improvements, or build custom platform capabilities using [Nx Devkit](/docs/extending-nx/intro).
 
 ## Where to go from here?
 
