@@ -22,7 +22,8 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
-  /* Run your tests before starting the tests */
+  // make sure the web server is running before we start
+  // bc we're making Nx orchestrate the server start up instead of playwright
   globalSetup: './e2e-global-setup',
   projects: [
     {

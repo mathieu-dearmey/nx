@@ -13,7 +13,7 @@ A project's configuration is constructed by Nx from three sources:
 2. [Workspace `targetDefaults`](/reference/nx-json#target-defaults) defined in the `nx.json` file
 3. Individual project level configuration files (`package.json` and `project.json`)
 
-Each source will [overwrite the previous source](/recipes/running-tasks/pass-args-to-commands). That means `targetDefaults` will overwrite inferred tasks and project level configuration will overwrite both `targetDefaults` and inferred tasks. The combined project configuration can be viewed in the project details view by using [Nx Console](/getting-started/editor-setup) in your IDE or by running:
+Each source will [overwrite the previous source](/recipes/tasks--caching/pass-args-to-commands). That means `targetDefaults` will overwrite inferred tasks and project level configuration will overwrite both `targetDefaults` and inferred tasks. The combined project configuration can be viewed in the project details view by using [Nx Console](/getting-started/editor-setup) in your IDE or by running:
 
 ```shell {% frame="none" %}
 nx show project myproject --web
@@ -272,7 +272,7 @@ A typical set of inputs may look like this:
 
 {% cardgrid %}
 {% linkcard title="Inputs and Named Inputs Reference" description="Learn about all the possible settings for `inputs` and `namedInputs`" href="/reference/inputs" /%}
-{% linkcard title="Configure Inputs for Task Caching" description="This recipes walks you through a few examples of how to configure `inputs` and `namedInputs`" href="/recipes/running-tasks/configure-inputs" /%}
+{% linkcard title="Configure Inputs for Task Caching" description="This recipes walks you through a few examples of how to configure `inputs` and `namedInputs`" href="/recipes/tasks--caching/configure-inputs" /%}
 {% /cardgrid %}
 
 ### Outputs
@@ -289,10 +289,10 @@ Specifically, by default, the following locations are cached for builds:
 - `{projectRoot}/public`
 
 {% cardgrid %}
-{% linkcard title="Configure Outputs for Task Caching" description="This recipes walks gives helpful tips to configure `outputs` for tasks" href="/recipes/running-tasks/configure-outputs" /%}
+{% linkcard title="Configure Outputs for Task Caching" description="This recipes walks gives helpful tips to configure `outputs` for tasks" href="/recipes/tasks--caching/configure-outputs" /%}
 {% /cardgrid  %}
 
-Read the [configure outputs for task caching](/recipes/running-tasks/configure-outputs) recipe for helpful tips for setting outputs.
+Read the [configure outputs for task caching](/recipes/tasks--caching/configure-outputs) recipe for helpful tips for setting outputs.
 
 #### Basic Example
 
@@ -612,7 +612,7 @@ To define what a task does, you must configure which command or executor will ru
 }
 ```
 
-For more details on how to pass args to the underlying command see the [Pass Args to Commands recipe](/recipes/running-tasks/pass-args-to-commands).
+For more details on how to pass args to the underlying command see the [Pass Args to Commands recipe](/recipes/tasks--caching/pass-args-to-commands).
 
 In the case of an explicit target using an executor, you can specify the executor and the options specific to that executor as follows:
 
