@@ -2,6 +2,34 @@ import { test, expect, Page, Locator } from '@playwright/test';
 
 import { sidebar } from '../sidebar';
 
+async function expandAllSidebarSections(page: Page, section: Locator): Promise<void> {
+  let expandedAny = true;
+  let maxIterations = 10; // Prevent infinite loops
+  
+  while (expandedAny && maxIterations > 0) {
+    expandedAny = false;
+    maxIterations--;
+    
+    // Find all currently closed details elements
+    const closedDetails = await section.locator('details:not([open])').all();
+    
+    for (const details of closedDetails) {
+      // Click the summary to expand the details
+      const summary = details.locator('summary');
+      await summary.click();
+      expandedAny = true;
+      
+      // Small delay to allow for DOM updates
+      await page.waitForTimeout(50);
+    }
+    
+    // If we expanded any sections, wait a bit longer for animations and DOM updates
+    if (expandedAny) {
+      await page.waitForTimeout(200);
+    }
+  }
+}
+
 test('root route redirects to getting started page', async ({ page }) => {
   await page.goto('/docs');
 
@@ -69,14 +97,12 @@ sidebar.forEach((entry) => {
     await expect(section).toBeVisible();
 
     await test.step('expand all sub sections', async () => {
-      // TODO: expand all sub sections to be able to get all links
-      //
-      //
+      // Recursively expand all details elements in the sidebar
+      await expandAllSidebarSections(page, section);
     });
 
     const sectionLinks = await section.getByRole('link').all();
 
-    // TODO: get all the collapsed link items too
     for (const sidebarItem of sectionLinks) {
       const name = await sidebarItem.textContent();
       await test.step(name, async () => {
