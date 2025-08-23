@@ -1,4 +1,6 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page, Locator } from '@playwright/test';
+
+import { sidebar } from '../sidebar';
 
 test('root route redirects to getting started page', async ({ page }) => {
   await page.goto('/docs');
@@ -6,60 +8,91 @@ test('root route redirects to getting started page', async ({ page }) => {
   await expect(page).toHaveURL('/docs/getting-started/intro');
 });
 
-test('Sidebar links render content', async ({ page }) => {
-  await page.goto('/docs/getting-started/intro');
-
-  const sidebar = page.getByTestId('sidebar-wrapper');
-
-  await expect(sidebar).toBeVisible();
-
-  // TODO: get all the collapsed link items too
-  const links = await sidebar.getByRole('link').all();
+async function assertPageLinksAreValid(
+  page: Page,
+  contentTestId: string,
+  pageName: string,
+  linksToSkip: Set<string>,
+): Promise<Set<string>> {
   const seenLinks = new Set<string>();
+  const pageContent = page.getByTestId(contentTestId);
 
-  for (const sidebarItem of links) {
-    const name = await sidebarItem.textContent();
+  await expect(pageContent).toBeVisible();
 
-    await test.step(`Sidebar Item: ${name}`, async () => {
-      await sidebarItem.click();
-      const expectedLink = await sidebarItem.getAttribute('href');
+  const outbounds = await pageContent.getByRole('link').all();
+  const linkSet = new Set(
+    await Promise.all(outbounds.map((link) => link.getAttribute('href'))),
+  );
 
-      await expect(page).toHaveURL(expectedLink);
+  console.log('Links to visit', Array.from(linkSet));
 
-      const mainDocContent = page.getByTestId('main-pane');
-      await expect(mainDocContent).toBeVisible();
+  for (const outboundLink of Array.from(linkSet)) {
+    if (outboundLink.startsWith('http') || outboundLink.startsWith('#')) {
+      // external link or a fragment link
+      continue;
+    }
 
-      const outbounds = await mainDocContent.getByRole('link').all();
-      const linkSet = new Set(
-        await Promise.all(outbounds.map((link) => link.getAttribute('href'))),
-      );
+    if (linksToSkip.has(outboundLink)) {
+      console.log('Already seen link, skipping', outboundLink);
+      continue;
+    }
+    seenLinks.add(outboundLink);
+    await page.goto(outboundLink);
 
-      console.log('Links to visit', Array.from(linkSet));
-
-      for (const outboundLink of Array.from(linkSet)) {
-        if (outboundLink.startsWith('http') || outboundLink.startsWith('#')) {
-          // external link or a fragment link
-          continue;
-        }
-
-        if (seenLinks.has(outboundLink)) {
-          console.log('Already seen link, skipping', outboundLink);
-          continue;
-        }
-        seenLinks.add(outboundLink);
-        await page.goto(outboundLink);
-
-        // astros 404 page in dev
-        await expect(
-          page.getByText('404: not found'),
-          `Trying to visit ${outboundLink}, but found Astro dev server 404 page. Came from ${name} doc.`,
-        ).toBeHidden();
-        // nx.dev 404 page
-        await expect(
-          page.getByText('Page not found'),
-          `Trying to visit ${outboundLink}, but found Nx Dev 404 page. Came from ${name} doc.`,
-        ).toBeHidden();
-      }
-    });
+    // astros 404 page in dev
+    await expect(
+      page.getByText('404: not found'),
+      `Trying to visit ${outboundLink}, but found Astro dev server 404 page. Came from ${pageName} doc.`,
+    ).toBeHidden();
+    // nx.dev 404 page
+    await expect(
+      page.getByText('Page not found'),
+      `Trying to visit ${outboundLink}, but found Nx Dev 404 page. Came from ${pageName} doc.`,
+    ).toBeHidden();
   }
+
+  return seenLinks;
+}
+
+sidebar.forEach((entry) => {
+  test(`Sidebar Section: ${entry.label}`, async ({ page }) => {
+    // lot-o-links
+    test.setTimeout(5 * 60 * 1000);
+
+    const seenLinks = new Set<string>();
+    await page.goto('/docs');
+
+    const section = page
+      .getByTestId('sidebar-wrapper')
+      .locator('ul.top-level>li>details')
+      .filter({ hasText: entry.label });
+    await expect(section).toBeVisible();
+
+    await test.step('expand all sub sections', async () => {
+      // TODO: expand all sub sections to be able to get all links
+      //
+      //
+    });
+
+    const sectionLinks = await section.getByRole('link').all();
+
+    // TODO: get all the collapsed link items too
+    for (const sidebarItem of sectionLinks) {
+      const name = await sidebarItem.textContent();
+      await test.step(name, async () => {
+        await sidebarItem.click();
+        const expectedLink = await sidebarItem.getAttribute('href');
+        await expect(page).toHaveURL(expectedLink);
+
+        const visitedLinks = await assertPageLinksAreValid(
+          page,
+          'main-pane',
+          name,
+          seenLinks,
+        );
+
+        visitedLinks.forEach((l) => seenLinks.add(l));
+      });
+    }
+  });
 });

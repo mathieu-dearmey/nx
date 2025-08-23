@@ -63,8 +63,8 @@ Let's take a look at the structure of our new Nx workspace:
 
 Here are some files that might jump to your eyes:
 
-- The `.nx` folder is where Nx stores local metadata about your workspaces using the [Nx Daemon](/concepts/nx-daemon).
-- The [`nx.json` file](/reference/nx-json) contains configuration settings for Nx itself and global default settings that individual projects inherit.
+- The `.nx` folder is where Nx stores local metadata about your workspaces using the [Nx Daemon](/docs/concepts/nx-daemon).
+- The [`nx.json` file](/docs/reference/nx-json) contains configuration settings for Nx itself and global default settings that individual projects inherit.
 - The `.github/workflows/ci.yml` file preconfigures your CI in GitHub Actions to run build and test through Nx.
 
 Now, let's build some features and see how Nx helps get us to production faster.
@@ -135,10 +135,10 @@ Each target contains a configuration object that tells Nx how to run that target
 
 The most critical parts are:
 
-- `executor` - this is of the syntax `<plugin>:<executor-name>`, where the `plugin` is an NPM package containing an [Nx Plugin](/extending-nx/intro/getting-started) and `<executor-name>` points to a function that runs the task.
+- `executor` - this is of the syntax `<plugin>:<executor-name>`, where the `plugin` is an NPM package containing an [Nx Plugin](/docs/extending-nx/intro) and `<executor-name>` points to a function that runs the task.
 - `options` - these are additional properties and flags passed to the executor function to customize it
 
-To view all tasks for a project, look in the [Nx Console](/getting-started/editor-setup) project detail view or run:
+To view all tasks for a project, look in the [Nx Console](/docs/getting-started/editor-setup) project detail view or run:
 
 ```shell {% frame="none" %}
 npx nx show project demo
@@ -405,7 +405,7 @@ If you have keen eyes, you may have noticed that there is a typo in the `App` co
 
 ## Visualize your Project Structure
 
-Nx automatically detects the dependencies between the various parts of your workspace and builds a [project graph](/features/explore-graph). This graph is used by Nx to perform various optimizations such as determining the correct order of execution when running tasks like `npx nx build`, identifying [affected projects](/features/run-tasks#run-tasks-on-projects-affected-by-a-pr) and more. Interestingly, you can also visualize it.
+Nx automatically detects the dependencies between the various parts of your workspace and builds a [project graph](/docs/features/explore-graph). This graph is used by Nx to perform various optimizations such as determining the correct order of execution when running tasks like `npx nx build`, identifying [affected projects](/docs/features/run-tasks#run-tasks-on-projects-affected-by-a-pr) and more. Interestingly, you can also visualize it.
 
 Just run:
 
@@ -474,7 +474,7 @@ There is a test failure for the `demo` app due to the updated content. Don't wor
 
 ### Local Task Cache
 
-One thing to highlight is that Nx is able to [cache the tasks you run](/features/cache-task-results).
+One thing to highlight is that Nx is able to [cache the tasks you run](/docs/features/cache-task-results).
 
 Note that all of these targets are automatically cached by Nx. If you re-run a single one or all of them again, you'll see that the task completes immediately. In addition, (as can be seen in the output example below) there will be a note that a matching cache result was found and therefore the task was not run again.
 
@@ -497,7 +497,7 @@ Note that all of these targets are automatically cached by Nx. If you re-run a s
 
 Again, the `demo:test` task failed, but notice that the remaining three tasks were read from cache.
 
-Not all tasks might be cacheable though. You can configure the `cache` settings in the `targetDefaults` property of the `nx.json` file. You can also [learn more about how caching works](/features/cache-task-results).
+Not all tasks might be cacheable though. You can configure the `cache` settings in the `targetDefaults` property of the `nx.json` file. You can also [learn more about how caching works](/docs/features/cache-task-results).
 
 ## Self-Healing CI with Nx Cloud
 
@@ -541,7 +541,7 @@ jobs:
         if: always()
 ```
 
-You will also need to install the [Nx Console](/getting-started/editor-setup) editor extension for VS Code, Cursor, or IntelliJ. For the complete AI setup guide, see our [AI integration documentation](/getting-started/ai-integration).
+You will also need to install the [Nx Console](/docs/getting-started/editor-setup) editor extension for VS Code, Cursor, or IntelliJ. For the complete AI setup guide, see our [AI integration documentation](/docs/getting-started/ai-setup).
 
 {% install_nx_console /%}
 
@@ -574,12 +574,12 @@ When you click `View Results` to show the run in Nx Cloud, you'll notice somethi
 
 ![Nx Cloud run showing remote cache hits](../../../../assets/tutorials/angular-remote-cache-cloud.avif)
 
-This happens because Nx Cloud caches the results of tasks and reuses them across different CI runs. As long as the inputs for each task have not changed (e.g. source code), then their results can be replayed from Nx Cloud's [Remote Cache](/ci/features/remote-cache). In this case, since the last fix was applied only to the `demo` app's source code, none of the tasks for `ui` library had to be run again.
+This happens because Nx Cloud caches the results of tasks and reuses them across different CI runs. As long as the inputs for each task have not changed (e.g. source code), then their results can be replayed from Nx Cloud's [Remote Cache](/docs/features/ci-features/remote-cache). In this case, since the last fix was applied only to the `demo` app's source code, none of the tasks for `ui` library had to be run again.
 
 This significantly speeds up the time to green for your pull requests, because subsequent changes to them have a good chance to replay tasks from cache.
 
 {% callout type="note" title="Remote Cache Outputs" %}
-Outputs from cached tasks, such as the `dist` folder for builds or `coverage` folder for tests, are also read from cache. Even though a task was not run again, its outputs are available. The [Cache Task Results](/features/cache-task-results) page provides more details on caching.
+Outputs from cached tasks, such as the `dist` folder for builds or `coverage` folder for tests, are also read from cache. Even though a task was not run again, its outputs are available. The [Cache Task Results](/docs/features/cache-task-results) page provides more details on caching.
 {% /callout %}
 
 This pull request is now ready to be merged with the help of Nx Cloud's self-healing CI and remote caching.
@@ -590,12 +590,12 @@ This pull request is now ready to be merged with the help of Nx Cloud's self-hea
 
 Here are some things you can dive into next:
 
-- Read more about [how Nx compares to the Angular CLI](/technologies/angular/recipes/nx-and-angular)
-- Learn more about the [underlying mental model of Nx](/concepts/mental-model)
-- Learn about popular generators such as [how to setup Tailwind](/technologies/angular/recipes/using-tailwind-css-with-angular-projects)
-- Learn how to [migrate your existing Angular CLI repo to Nx](/technologies/angular/migration/angular)
-- Learn about [enforcing boundaries between projects](/features/enforce-module-boundaries)
-- [Setup Storybook for our shared UI library](/technologies/test-tools/storybook/recipes/overview-angular)
+- Read more about [how Nx compares to the Angular CLI](/docs/technologies/angular/guides/nx-and-angular)
+- Learn more about the [underlying mental model of Nx](/docs/concepts/mental-model)
+- Learn about popular generators such as [how to setup Tailwind](/docs/technologies/angular/guides/using-tailwind-css-with-angular-projects)
+- Learn how to [migrate your existing Angular CLI repo to Nx](/docs/technologies/angular/migration/angular)
+- Learn about [enforcing boundaries between projects](/docs/features/enforce-module-boundaries)
+- [Setup Storybook for our shared UI library](/docs/technologies/test-tools/storybook/guides/overview-angular)
 
 Also, make sure you
 
