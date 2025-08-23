@@ -22,6 +22,8 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
+  /* Run your tests before starting the tests */
+  globalSetup: './e2e-global-setup',
   projects: [
     {
       name: 'chromium',

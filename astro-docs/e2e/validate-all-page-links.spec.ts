@@ -8,25 +8,23 @@ test('root route redirects to getting started page', async ({ page }) => {
   await expect(page).toHaveURL('/docs/getting-started/intro');
 });
 
+const sidebar_section_selector = 'ul.top-level>li>details';
 sidebar.forEach((entry) => {
-  test(`Sidebar Section: ${entry.label}`, async ({ page }) => {
+  test(`Sidebar Section: ${entry.label}`, async ({ page, context }) => {
     // lot-o-links
     test.setTimeout(5 * 60 * 1000);
 
     const seenLinks = new Set<string>();
     await page.goto('/docs');
 
+    await expandSideBar(page);
+
     const section = page
       .getByTestId('sidebar-wrapper')
-      .locator('ul.top-level>li>details')
+      .locator(sidebar_section_selector)
       .filter({ hasText: entry.label })
       .first();
     await expect(section).toBeVisible();
-
-    await test.step('expand all sub sections', async () => {
-      // Recursively expand all details elements in the sidebar
-      await expandAllSidebarSections(page, section);
-    });
 
     const sectionLinks = await section.getByRole('link').all();
 
@@ -37,26 +35,34 @@ sidebar.forEach((entry) => {
         const expectedLink = await sidebarItem.getAttribute('href');
         await expect(page).toHaveURL(expectedLink);
 
-        const visitedLinks = await assertPageLinksAreValid(
+        const { passed, failed } = await checkPageLinksValidity(
           page,
           'main-pane',
           name,
           seenLinks
         );
 
-        visitedLinks.forEach((l) => seenLinks.add(l));
+        passed.forEach((link) => seenLinks.add(link));
+
+        if (failed.size > 0) {
+          console.warn(
+            `${name} has ${failed.size} broken links`,
+            Array.from(failed)
+          );
+        }
       });
     }
   });
 });
 
-async function assertPageLinksAreValid(
+async function checkPageLinksValidity(
   page: Page,
   contentTestId: string,
   pageName: string,
   linksToSkip: Set<string>
-): Promise<Set<string>> {
-  const seenLinks = new Set<string>();
+): Promise<{ failed: Set<string>; passed: Set<string> }> {
+  const passed = new Set<string>();
+  const failed = new Set<string>();
   const pageContent = page.getByTestId(contentTestId);
 
   await expect(pageContent).toBeVisible();
@@ -70,63 +76,79 @@ async function assertPageLinksAreValid(
     await Promise.all(outbounds.map((link) => link.getAttribute('href')))
   );
 
-  console.log('Links to visit', Array.from(linkSet));
+  console.debug('Links to visit', Array.from(linkSet));
 
   for (const outboundLink of Array.from(linkSet)) {
+    const failuresBeforeCheck = test.info().errors.length;
     if (outboundLink.startsWith('http') || outboundLink.startsWith('#')) {
       // external link or a fragment link
       continue;
     }
 
     if (linksToSkip.has(outboundLink)) {
-      console.log('Already seen link, skipping', outboundLink);
+      console.debug('Already seen link, skipping', outboundLink);
       continue;
     }
-    seenLinks.add(outboundLink);
     await page.goto(outboundLink);
 
     // astros 404 page in dev
-    await expect(
-      page.getByText('404: not found'),
-      `Trying to visit ${outboundLink}, but found Astro dev server 404 page. Came from ${pageName} doc.`
-    ).toBeHidden();
+    await expect
+      .soft(
+        page.getByText('404: not found'),
+        `Trying to visit ${outboundLink}, but found Astro dev server 404 page. Came from ${pageName} doc.`
+      )
+      .toBeHidden({ timeout: 2_000 });
     // nx.dev 404 page
-    await expect(
-      page.getByText('Page not found'),
-      `Trying to visit ${outboundLink}, but found Nx Dev 404 page. Came from ${pageName} doc.`
-    ).toBeHidden();
+    await expect
+      .soft(
+        page.getByText('Page not found'),
+        `Trying to visit ${outboundLink}, but found Nx Dev 404 page. Came from ${pageName} doc.`
+      )
+      .toBeHidden({ timeout: 2_000 });
+
+    const failuresAfterCheck = test.info().errors.length;
+    if (failuresAfterCheck > failuresBeforeCheck) {
+      failed.add(outboundLink);
+      // head back to a working page
+      await page.goBack();
+    } else {
+      passed.add(outboundLink);
+    }
   }
 
-  return seenLinks;
+  return {
+    failed,
+    passed,
+  };
 }
 
-async function expandAllSidebarSections(
-  page: Page,
-  section: Locator
-): Promise<void> {
-  let expandedAny = true;
-  let maxIterations = 10; // Prevent infinite loops
+async function expandSideBar(page: Page) {
+  // toggle first item to make sure the sidebar session state is set
+  await page
+    .getByTestId('sidebar-wrapper')
+    .locator(sidebar_section_selector)
+    .locator('summary')
+    .first()
+    .click();
 
-  while (expandedAny && maxIterations > 0) {
-    expandedAny = false;
-    maxIterations--;
+  const newState = await page.evaluate(() => {
+    const sidebarState = window.sessionStorage.getItem('sl-sidebar-state');
+    if (sidebarState) {
+      const parsedState = JSON.parse(sidebarState);
+      // open every item in the sidebar.
+      // to get the right length we'd have to open/clode every page
+      // so just use a really large number to make sure we hit every possible section
+      parsedState.open = Array.from({ length: 10_000 }, () => true);
 
-    // Find all currently closed details elements
-    const closedDetails = await section.locator('details:not([open])').all();
-
-    for (const details of closedDetails) {
-      // Click the summary to expand the details
-      const summary = details.locator('summary');
-      await summary.click();
-      expandedAny = true;
-
-      // Small delay to allow for DOM updates
-      await page.waitForTimeout(50);
+      window.sessionStorage.setItem(
+        'sl-sidebar-state',
+        JSON.stringify(parsedState)
+      );
     }
+  });
 
-    // If we expanded any sections, wait a bit longer for animations and DOM updates
-    if (expandedAny) {
-      await page.waitForTimeout(200);
-    }
-  }
+  console.log('newState', newState);
+
+  // reload page to make sure new session state is applied
+  await page.reload();
 }
