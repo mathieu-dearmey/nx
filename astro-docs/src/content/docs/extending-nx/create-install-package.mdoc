@@ -14,7 +14,7 @@ Starting a new project should be as seamless as possible. In the JavaScript ecos
 
 These packages are used to set up a new project in some form.
 
-Customizing your initial project setup is already possible with an [Nx Preset generator](/extending-nx/recipes/create-preset). By creating and shipping a generator named `preset` in your Nx plugin, you can then pass it via the `--preset` flag to the `create-nx-workspace` command:
+Customizing your initial project setup is already possible with an [Nx Preset generator](/docs/extending-nx/create-preset). By creating and shipping a generator named `preset` in your Nx plugin, you can then pass it via the `--preset` flag to the `create-nx-workspace` command:
 
 ```shell {% frame="none" %}
 npx create-nx-workspace --preset my-plugin
@@ -90,7 +90,7 @@ const { directory } = await createWorkspace(`my-plugin@${presetVersion}`, {
 });
 ```
 
-This will invoke the `my-plugin` package's `preset` generator, which will contain the logic for setting up the workspace. This preset generator will be invoked when running either `npx create-nx-workspace --preset my-plugin` or `npx create-my-plugin`. For more information about customizing your preset, see: [Creating a Preset](/extending-nx/recipes/create-preset).
+This will invoke the `my-plugin` package's `preset` generator, which will contain the logic for setting up the workspace. This preset generator will be invoked when running either `npx create-nx-workspace --preset my-plugin` or `npx create-my-plugin`. For more information about customizing your preset, see: [Creating a Preset](/docs/extending-nx/create-preset).
 
 ## Testing your create package
 

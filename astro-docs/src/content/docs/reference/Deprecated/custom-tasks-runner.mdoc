@@ -4,7 +4,7 @@ description: 'Learn about the transition from Custom Tasks Runner to the new plu
 ---
 
 
-The Custom Task Runners API was created many years ago and has not been supported for several years. It was developed before we introduced a formal method for extending Nx through [plugins](/extending-nx/intro/getting-started). The API potentially allows modifications to the lifecycle of the Nx command execution, which breaks important invariants that Nx depends on. The new API leverages the plugins API for better performance and functionality.
+The Custom Task Runners API was created many years ago and has not been supported for several years. It was developed before we introduced a formal method for extending Nx through [plugins](/docs/extending-nx/intro/getting-started). The API potentially allows modifications to the lifecycle of the Nx command execution, which breaks important invariants that Nx depends on. The new API leverages the plugins API for better performance and functionality.
 
 This page guides you on how to migrate off the now deprecated Custom Task Runner API for both:
 
@@ -18,7 +18,7 @@ There are several ways to set up remote caching with Nx.
 
 ## The preTasksExecution and postTasksExecution hooks
 
-Starting with Nx 20.4, a dedicated plugin-based API has been introduced that allows you to safely hook into the task running lifecycle. This new approach provides pre and post execution hooks without compromising Nx's internal operations. For comprehensive documentation on this feature, see [Hook into the Task Running Lifecycle](/extending-nx/recipes/task-running-lifecycle).
+Starting with Nx 20.4, a dedicated plugin-based API has been introduced that allows you to safely hook into the task running lifecycle. This new approach provides pre and post execution hooks without compromising Nx's internal operations. For comprehensive documentation on this feature, see [Hook into the Task Running Lifecycle](/docs/extending-nx/task-running-lifecycle).
 
 Let's look into some concrete examples of how you can migrate from the previous custom task runners to this new API.
 

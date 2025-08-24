@@ -119,7 +119,7 @@ This tutorial walked you through how Nx can improve the local development experi
 
 - Nx reduces wasted time in CI with the [`affected` command](/docs/features/ci-features/affected).
 - Nx Replay's [remote caching](/docs/features/ci-features/remote-cache) will reuse task artifacts from different CI executions making sure you will never run the same computation twice.
-- Nx Agents [efficiently distribute tasks across machines](/ci/concepts/parallelization-distribution) ensuring constant CI time regardless of the repository size. The right number of machines is allocated for each PR to ensure good performance without wasting compute.
+- Nx Agents [efficiently distribute tasks across machines](/docs/concepts/ci-concepts/parallelization-distribution) ensuring constant CI time regardless of the repository size. The right number of machines is allocated for each PR to ensure good performance without wasting compute.
 - Nx Atomizer [automatically splits](/docs/features/ci-features/split-e2e-tasks) large e2e tests to distribute them across machines. Nx can also automatically [identify and rerun flaky e2e tests](/docs/features/ci-features/flaky-tasks).
 
 ### Connect to Nx Cloud
@@ -212,13 +212,7 @@ The `See all runs` link goes to a page with the progress and results of tasks th
 
 ![Run details](../../../../../assets/tutorials/nx-cloud-run-details.avif)
 
-For more information about how Nx can improve your CI pipeline, check out one of these guides:
-
-- [GitHub Actions with Nx](/docs/guides/nx-cloud/setup-ci/monorepo-ci-github-actions)
-- [Circle CI with Nx](/docs/guides/nx-cloud/setup-ci/monorepo-ci-circle-ci)
-- [Azure Pipelines with Nx](/docs/guides/nx-cloud/setup-ci/monorepo-ci-azure)
-- [Bitbucket Pipelines with Nx](/docs/guides/nx-cloud/setup-ci/monorepo-ci-bitbucket-pipelines)
-- [GitLab with Nx](/docs/guides/nx-cloud/setup-ci/monorepo-ci-gitlab)
+For more information about how Nx can improve your CI pipeline, [check out our details CI guides](/docs/guides/nx-cloud/setup-ci).
 
 ## Learn More
 

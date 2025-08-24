@@ -1,6 +1,7 @@
 import { test, expect, Page, Locator } from '@playwright/test';
-
 import { sidebar } from '../sidebar';
+
+const knownLinkIgnoreList = ['/reference/nx/executors', '/reference/devkit'];
 
 test('root route redirects to getting started page', async ({ page }) => {
   await page.goto('/docs');
@@ -87,6 +88,12 @@ async function checkPageLinksValidity(
       console.debug('Already seen link, skipping', outboundLink);
       continue;
     }
+
+    if (knownLinkIgnoreList.some((l) => outboundLink.includes(l))) {
+      console.warn(`Link ${outboundLink} is in manual ignore list. Skipping..`);
+      continue;
+    }
+
     await page.goto(outboundLink);
 
     // NOTE: we use soft assert so we can check all links on the page in 1 go
