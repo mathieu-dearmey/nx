@@ -25,6 +25,9 @@ sidebar.forEach((entry) => {
       // get sepecific seciton title
       .locator('summary')
       .filter({ hasText: entry.label })
+      // the summary will always be first if multiple matches happen
+      // e.g. "features" has 'ci-features' but it will be nested under 'features'
+      .first()
       // get parent element
       .locator('xpath=..');
 
