@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+# | xargs -0 sed -i '' 's/<match>/<replace>/g'
+
+# replace links that start with /concepts to /docs/concepts
+rg "\(/concepts" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/concepts|](/docs/concepts|g'
+# usage in link card aka href="/concepts/..."
+rg "=\"/concepts" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/concepts|="/docs/concepts|g'
+
+
+# /recipes -> /docs/guides
+rg "\(/recipes" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/recipes|](/docs/guides|g'
+rg "=\"/recipes" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/recipes|="/docs/guides|g'
+
+# /features -> /docs/features
+rg "\(/features" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/features|](/docs/features|g'
+rg "=\"/features" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/features|="/docs/features|g'
+
+# /tech -> /docs/tech
+rg "\(/tech" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/tech|](/docs/tech|g'
+rg "=\"/tech" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/tech|="/docs/tech|g'
+
+
+## /recipes/running-tasks -> /docs/guides/tasks--caching
+rg "\(/recipes/running-tasks" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/recipes/running-tasks|](/docs/guides/tasks--caching|g'
+rg "=\"/recipes/running-tasks" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/recipes/running-tasks|="/docs/guides/tasks--caching|g'
+
+# /ci/features -> /docs/features/ci-features
+rg "\(/ci/features" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/ci/features|](/docs/features/ci-features|g'
+rg "=\"/ci/features" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/ci/features|="/docs/features/ci-features|g'
+
+# /getting-started -> /docs/getting-started
+rg "\(/getting" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/getting|](/docs/getting|g'
+rg "=\"/getting" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/getting|="/docs/getting|g'
+
+# /ci/recipes/set-up -> /docs/guides/nx-cloud/setup-ci
+rg "\(/ci/recipes/set-up" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/ci/recipes/set-up|](/docs/guides/nx-cloud/setup-ci|g'
+rg "=\"/ci/recipes/set-up" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/ci/recipes/set-up|="/docs/guides/nx-cloud/setup-ci|g'
+
+
+# /blog -> https://nx.dev/blog
+rg "\(/blog" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/blog|](https://nx.dev/blog|g'
+rg "=\"/blog" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/blog|="https://nx.dev/blog|g'
+
+
+# /enterprise -> https://nx.dev/enterprise
+rg "\(/enterprise" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/enterprise|](https://nx.dev/enterprise|g'
+rg "=\"/enterprise" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/enterprise|="https://nx.dev/enterprise|g'
+
+
+# /pricing -> https://nx.dev/pricing
+rg "\(/pricing" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/pricing|](https://nx.dev/pricing|g'
+rg "=\"/pricing" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/pricing|="https://nx.dev/pricing|g'
+
+
+# though these URLS that have `core-api` in them need to be special handled 
+# but we can search for 'core-api' later and do a different replace mechinism
+# /reference -> /docs/reference
+rg "\(/reference" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/reference|](/docs/reference|g'
+rg "=\"/reference" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/reference|="/docs/reference|g'

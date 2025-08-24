@@ -1,0 +1,37 @@
+---
+title: test docs
+---
+
+
+{% linkcard title="Infer tasks" href="/concepts/inferred-tasks" description="Automatically configure Nx settings for tasks based on tooling configuration" /%}
+{% linkcard title="Enhance Tooling with Executors" href="/concepts/executors-and-configurations" description="Run a tool in an advanced way that may not be possible from the command line" /%}
+
+
+blah [some link](/concepts/inferred-tasks) and some mor text
+
+
+src/content/docs/guides/Tasks & Caching/defining-task-pipeline.mdoc:[somelink](/recipes/running-tasks/task-graph-playwright-nx.webp)
+src/content/docs/guides/Tasks & Caching/defining-task-pipeline.mdoc:![Selecting "Focus task in Nx Graph" from the context menu in VS Code](../../../../assets/guides/running-tasks/task-graph-context-menu.webp)
+src/content/docs/guides/Tasks & Caching/defining-task-pipeline.mdoc:![Task graph of the Playwright Nx plugin in the nx repo being rendered in VS Code](../../../../assets/guides/running-tasks/task-graph-vscode.webp)
+src/content/docs/guides/Tasks & Caching/terminal-ui.mdoc:![Terminal UI Help](../../../../assets/guides/running-tasks/tui-help.png)
+
+
+
+src/content/docs/reference/glossary.mdoc:> See: [Customizing Inputs and Named Inputs](/recipes/tasks--caching/configure-inputs)
+src/content/docs/reference/glossary.mdoc:> See: [CI with Nx](/ci/recipes/set-up)
+src/content/docs/guides/Adopting Nx/adding-to-existing-project.mdoc:{% linkcard title="Customizing Inputs and Named Inputs" description="Learn more about how to fine-tune caching with custom inputs" href="/recipes/tasks--caching/configure-inputs" /%}
+src/content/docs/guides/Adopting Nx/adding-to-existing-project.mdoc:{% linkcard title="Adding Nx to NPM/Yarn/PNPM Workspace" description="Learn more about how to add Nx to an existing monorepo" href="/recipes/adopting-nx/adding-to-monorepo" /%}
+src/content/docs/extending-nx/tooling-plugin.mdoc:Inferred tasks work well for getting users started using your tool quickly, but you can also provide users with [executors](/extending-nx/recipes/local-executors), which are another way of encapsulating a task script for easy use in an Nx workspace. Without inferred tasks, executors must be explicitly configured for each task.
+src/content/docs/reference/Powerpack/conformance/overview.mdoc:- [Publish Conformance Rules to Nx Cloud](/ci/recipes/enterprise/conformance/publish-conformance-rules-to-nx-cloud)
+src/content/docs/reference/Powerpack/conformance/overview.mdoc:- [Configure Conformance Rules in Nx Cloud](/ci/recipes/enterprise/conformance/configure-conformance-rules-in-nx-cloud)
+src/content/docs/guides/Tips-n-Tricks/define-environment-variables.mdoc:for workspace-specific settings (like the [Nx Cloud token](/ci/recipes/security/access-tokens)).
+src/content/docs/extending-nx/create-install-package.mdoc:Customizing your initial project setup is already possible with an [Nx Preset generator](/extending-nx/recipes/create-preset). By creating and shipping a generator named `preset` in your Nx plugin, you can then pass it via the `--preset` flag to the `create-nx-workspace` command:
+src/content/docs/extending-nx/create-install-package.mdoc:This will invoke the `my-plugin` package's `preset` generator, which will contain the logic for setting up the workspace. This preset generator will be invoked when running either `npx create-nx-workspace --preset my-plugin` or `npx create-my-plugin`. For more information about customizing your preset, see: [Creating a Preset](/extending-nx/recipes/create-preset).
+src/content/docs/guides/Adopting Nx/from-turborepo.mdoc:| `envMode`              | Nx core does not block any environment variables. See [React](/technologies/react/recipes/use-environment-variables-in-react) and [Angular](/technologies/angular/recipes/use-environment-variables-in-angular) guides |
+src/content/docs/guides/Adopting Nx/from-turborepo.mdoc:| `globalDependencies`   | Add to the [`sharedGlobals` `namedInput`](/recipes/tasks--caching/configure-inputs)                                                                                                                                     |
+src/content/docs/guides/Adopting Nx/from-turborepo.mdoc:| `globalEnv`            | Add to the [`sharedGlobals` `namedInput`](/recipes/tasks--caching/configure-inputs) as an [`env` input](/reference/inputs#environment-variables)                                                                        |
+src/content/docs/guides/Adopting Nx/from-turborepo.mdoc:| `globalPassThroughEnv` | N/A. See [Defining Environment Variables](/recipes/tips-n-tricks/define-environment-variables)                                                                                                                         |
+src/content/docs/guides/Adopting Nx/from-turborepo.mdoc:| `passThroughEnv`   | N/A. See [Defining Environment Variables](/recipes/tips-n-tricks/define-environment-variables)                                                                                                                      |
+src/content/docs/guides/Adopting Nx/from-turborepo.mdoc:| `--env-mode`                | See [React](/technologies/react/recipes/use-environment-variables-in-react) and [Angular](/technologies/angular/recipes/use-environment-variables-in-angular) guides |
+src/content/docs/guides/Adopting Nx/from-turborepo.mdoc:| `--global-deps`             | Use [`inputs` in `nx.json`](/recipes/tasks--caching/configure-inputs)                                                                                                 |
+
