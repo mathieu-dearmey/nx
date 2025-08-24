@@ -22,8 +22,12 @@ sidebar.forEach((entry) => {
     const section = page
       .getByTestId('sidebar-wrapper')
       .locator(sidebar_section_selector)
+      // get sepecific seciton title
+      .locator('summary')
       .filter({ hasText: entry.label })
-      .first();
+      // get parent element
+      .locator('xpath=..');
+
     await expect(section).toBeVisible();
 
     const sectionLinks = await section.getByRole('link').all();
@@ -35,21 +39,13 @@ sidebar.forEach((entry) => {
         const expectedLink = await sidebarItem.getAttribute('href');
         await expect(page).toHaveURL(expectedLink);
 
-        const { passed, failed } = await checkPageLinksValidity(
+        const visitedLinks = await checkPageLinksValidity(
           page,
           'main-pane',
-          name,
-          seenLinks
+          seenLinks,
         );
 
-        passed.forEach((link) => seenLinks.add(link));
-
-        if (failed.size > 0) {
-          console.warn(
-            `${name} has ${failed.size} broken links`,
-            Array.from(failed)
-          );
-        }
+        visitedLinks.forEach((link) => seenLinks.add(link));
       });
     }
   });
@@ -58,11 +54,9 @@ sidebar.forEach((entry) => {
 async function checkPageLinksValidity(
   page: Page,
   contentTestId: string,
-  pageName: string,
-  linksToSkip: Set<string>
-): Promise<{ failed: Set<string>; passed: Set<string> }> {
+  linksToSkip: Set<string>,
+): Promise<Set<string>> {
   const passed = new Set<string>();
-  const failed = new Set<string>();
   const pageContent = page.getByTestId(contentTestId);
 
   await expect(pageContent).toBeVisible();
@@ -71,15 +65,16 @@ async function checkPageLinksValidity(
   // to finish serving the page before moving on
   await page.waitForTimeout(500);
 
+  const visitingFrom = page.url();
+
   const outbounds = await pageContent.getByRole('link').all();
   const linkSet = new Set(
-    await Promise.all(outbounds.map((link) => link.getAttribute('href')))
+    await Promise.all(outbounds.map((link) => link.getAttribute('href'))),
   );
 
   console.debug('Links to visit', Array.from(linkSet));
 
   for (const outboundLink of Array.from(linkSet)) {
-    const failuresBeforeCheck = test.info().errors.length;
     if (outboundLink.startsWith('http') || outboundLink.startsWith('#')) {
       // external link or a fragment link
       continue;
@@ -91,35 +86,29 @@ async function checkPageLinksValidity(
     }
     await page.goto(outboundLink);
 
+    // NOTE: we use soft assert so we can check all links on the page in 1 go
+    // to make fixing a page at a time easier
+
     // astros 404 page in dev
     await expect
       .soft(
         page.getByText('404: not found'),
-        `Trying to visit ${outboundLink}, but found Astro dev server 404 page. Came from ${pageName} doc.`
+        `Trying to visit ${outboundLink}, but found Astro dev server 404 page. Came from ${visitingFrom}.`,
       )
       .toBeHidden({ timeout: 2_000 });
     // nx.dev 404 page
     await expect
       .soft(
         page.getByText('Page not found'),
-        `Trying to visit ${outboundLink}, but found Nx Dev 404 page. Came from ${pageName} doc.`
+        `Trying to visit ${outboundLink}, but found Nx Dev 404 page. Came from ${visitingFrom}.`,
       )
       .toBeHidden({ timeout: 2_000 });
-
-    const failuresAfterCheck = test.info().errors.length;
-    if (failuresAfterCheck > failuresBeforeCheck) {
-      failed.add(outboundLink);
-      // head back to a working page
-      await page.goBack();
-    } else {
-      passed.add(outboundLink);
-    }
   }
 
-  return {
-    failed,
-    passed,
-  };
+  // error out if the page had any 404s
+  expect(test.info().errors.length).toBe(0);
+
+  return passed;
 }
 
 async function expandSideBar(page: Page) {
@@ -142,7 +131,7 @@ async function expandSideBar(page: Page) {
 
       window.sessionStorage.setItem(
         'sl-sidebar-state',
-        JSON.stringify(parsedState)
+        JSON.stringify(parsedState),
       );
     }
   });
