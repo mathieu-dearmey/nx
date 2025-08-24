@@ -53,6 +53,12 @@
     },
     "e2e-ci--**/*": {
       "dependsOn": ["preview"]
+    },
+    "validate-links": {
+      "command": "npx tsx validate-links.ts",
+        "options": {
+          "cwd": "astro-docs"
+        }
     }
   }
 }
