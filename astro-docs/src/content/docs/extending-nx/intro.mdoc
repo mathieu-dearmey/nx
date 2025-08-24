@@ -10,8 +10,8 @@ Nx's core functionality focuses on task running and understanding your project a
 
 As your repository grows, you'll discover more reasons to create your own plugin
 
-- You can help encourage your coworkers to consistently follow best practices by creating [code generators](/features/generate-code) that are custom built for your repository.
-- You can remove duplicate configuration and ensure accurate caching settings by writing your own [inferred tasks](/concepts/inferred-tasks).
+- You can help encourage your coworkers to consistently follow best practices by creating [code generators](/docs/features/generate-code) that are custom built for your repository.
+- You can remove duplicate configuration and ensure accurate caching settings by writing your own [inferred tasks](/docs/concepts/inferred-tasks).
 - For organizations with multiple monorepos, you can encourage consistency across repositories by providing a repository [preset](/extending-nx/recipes/create-preset) and writing [migrations](/extending-nx/recipes/migration-generators) that will help keep every project in sync.
 - You can write a plugin that integrates a tool or framework into Nx and then [share your plugin](/extending-nx/recipes/publish-plugin) with the broader community.
 
@@ -40,9 +40,9 @@ npx nx g plugin tools/my-plugin
 
 You can follow along with one of the step by step tutorials below that is focused on a particular use-case. These tutorials expect you to already have the following skills:
 
-- [Run tasks](/features/run-tasks) with Nx and configure Nx to [infers tasks for you](/concepts/inferred-tasks)
-- [Use code generators](/features/generate-code)
-- Understand the [project graph](/features/explore-graph)
+- [Run tasks](/docs/features/run-tasks) with Nx and configure Nx to [infers tasks for you](/docs/concepts/inferred-tasks)
+- [Use code generators](/docs/features/generate-code)
+- Understand the [project graph](/docs/features/explore-graph)
 - Write [TypeScript](https://www.typescriptlang.org/) code
 
 {% cardgrid %}
@@ -88,7 +88,7 @@ This generator calls the following functions:
 - `generateFiles` - Create files in the new project based on the template files in the `files` folder.
 - `formatFiles` - Format the newly created files with Prettier.
 
-You can find more helper functions in the [Nx Devkit reference documentation](/reference/core-api/devkit/documents/nx_devkit).
+You can find more helper functions in the [Nx Devkit reference documentation](/docs/reference/core-api/devkit/documents/nx_devkit).
 
 ### Create a README Template File
 
@@ -115,6 +115,6 @@ If you're happy with the files that are generated, you can actually run the gene
 
 ## Next Steps
 
-- [Browse the plugin registry](/plugin-registry) to find one that suits your needs.
+- [Browse the plugin registry](/docs/plugin-registry) to find one that suits your needs.
 - [Sign up for Nx Enterprise](https://nx.dev/enterprise) to get dedicated support from Nx team members.
 - [Collaborate on the Nx Discord](https://go.nx.dev/community) to work with other plugin authors.

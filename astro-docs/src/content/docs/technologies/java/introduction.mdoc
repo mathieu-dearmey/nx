@@ -5,14 +5,14 @@ description: This plugin allows Gradle tasks to be run through Nx.
 
 [Gradle](https://gradle.org/) is a fast, dependable, and adaptable open-source build automation tool with an elegant and extensible declarative build language. Gradle supports Android, Java, Kotlin Multiplatform, Groovy, Scala, Javascript, and C/C++.
 
-The Nx plugin for Gradle registers Gradle projects in your Nx workspace. It allows Gradle tasks to be run through Nx. Nx effortlessly makes your [CI faster](/ci/recipes/set-up).
+The Nx plugin for Gradle registers Gradle projects in your Nx workspace. It allows Gradle tasks to be run through Nx. Nx effortlessly makes your [CI faster](/docs/guides/nx-cloud/setup-ci).
 
 Nx adds the following features to your workspace:
 
-- [Cache task results](/features/cache-task-results)
-- [Distribute task execution](/ci/features/distribute-task-execution)
-- [Run only tasks affected by a PR](/ci/features/affected)
-- [Interactively explore your workspace](/features/explore-graph)
+- [Cache task results](/docs/features/cache-task-results)
+- [Distribute task execution](/docs/features/ci-features/distribute-task-execution)
+- [Run only tasks affected by a PR](/docs/features/ci-features/affected)
+- [Interactively explore your workspace](/docs/features/explore-graph)
 
 {% aside type="note" title="Java Compatibility" %}
 This plugin requires Java 17 or newer. Using older Java versions is unsupported and may lead to issues. If you need support for an older version, please create an issue on [Github](https://github.com/nrwl/nx)!
@@ -129,7 +129,7 @@ The `dev.nx.gradle.project-graph` plugin introduces a task named `nxProjectGraph
 
 ## View Inferred Tasks
 
-To view inferred tasks for a project, open the [project details view](/features/explore-graph#explore-projects-in-your-workspace) in Nx Console or run `nx show project my-project` in the command line.
+To view inferred tasks for a project, open the [project details view](/docs/features/explore-graph#explore-projects-in-your-workspace) in Nx Console or run `nx show project my-project` in the command line.
 
 ## Setting Up @nx/gradle in a Nx Workspace
 
@@ -262,7 +262,7 @@ To disable the `build-ci` target, simply remove the `ciBuildTargetName` option f
 
 ### Continuous Tasks
 
-Gradle doesn't have a standard way to identify tasks which are [continuous](/reference/project-configuration#continuous), like `bootRun` for serving a Spring Boot project. To ensure Nx handles these continuous tasks correctly, you can explicitly mark them as continuous.
+Gradle doesn't have a standard way to identify tasks which are [continuous](/docs/reference/project-configuration#continuous), like `bootRun` for serving a Spring Boot project. To ensure Nx handles these continuous tasks correctly, you can explicitly mark them as continuous.
 
 {% tabs %}
 {% tabitem label="nx.json" %}

@@ -236,7 +236,7 @@ For Nx Cloud Agents compatibility, please contact [Nx Enterprise support](/conta
 
 When using Nx Release with Docker images, the publishing process differs from npm packages.
 
-Docker images are built with the `npx nx run-many -t docker:build` command, which is the default for [`preVersionCommand`](/recipes/nx-release/build-before-versioning#build-before-docker-versioning) in `nx.json`.
+Docker images are built with the `npx nx run-many -t docker:build` command, which is the default for [`preVersionCommand`](/docs/guides/nx-release/build-before-versioning#build-before-docker-versioning) in `nx.json`.
 
 You may also run the build command manually before running `nx release`. After the images are built, they are tagged during the versioning phase, then pushed to a registry during the publish phase.
 

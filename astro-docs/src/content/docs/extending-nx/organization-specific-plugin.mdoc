@@ -127,7 +127,7 @@ export interface LibraryGeneratorSchema {
 The `schema.d.ts` file is used for type checking inside the implementation file. It should match the properties in `schema.json`.
 {% /aside %}
 
-The schema files not only provide structure to the CLI, but also allow [Nx Console](/getting-started/editor-setup) to show an accurate UI for the generator.
+The schema files not only provide structure to the CLI, but also allow [Nx Console](/docs/getting-started/editor-setup) to show an accurate UI for the generator.
 
 ![Nx Console UI for the library generator](/shared/plugins/generator-options-ui.png)
 
@@ -139,7 +139,7 @@ npx nx g @myorg/recommended:library test-library --directory=nested/directory/te
 
 ### Choose a Scope
 
-It can be helpful to tag a library with a scope that matches the application it should be associated with. With these tags in place, you can [set up rules](/features/enforce-module-boundaries) for how projects can depend on each other. For our repository, let's say the scopes can be `store`, `api` or `shared` and the default directory structure should match the chosen scope. We can update the generator to encourage developers to maintain this structure.
+It can be helpful to tag a library with a scope that matches the application it should be associated with. With these tags in place, you can [set up rules](/docs/features/enforce-module-boundaries) for how projects can depend on each other. For our repository, let's say the scopes can be `store`, `api` or `shared` and the default directory structure should match the chosen scope. We can update the generator to encourage developers to maintain this structure.
 
 {% tabs syncKey="schema-file" %}
 {% tabitem label="schema.d.ts" %}
@@ -301,7 +301,7 @@ function updateViteConfiguration(tree, directory) {
 export default libraryGenerator;
 ```
 
-We updated the generator to use some new helper functions from the Nx devkit. Here are a few functions you may find useful. See the [full API reference](/reference/core-api/devkit/documents/nx_devkit) for all the options.
+We updated the generator to use some new helper functions from the Nx devkit. Here are a few functions you may find useful. See the [full API reference](/docs/reference/core-api/devkit/documents/nx_devkit) for all the options.
 
 - [`runTasksInSerial`](/docs/reference/devkit/runTasksInSerial) - Allows you to collect many callbacks and return them all at the end of the generator.
 - [`formatFiles`](/docs/reference/devkit/formatFiles) - Run Prettier on the repository

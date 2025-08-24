@@ -7,10 +7,21 @@ rg "\(/concepts" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 
 # usage in link card aka href="/concepts/..."
 rg "=\"/concepts" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/concepts|="/docs/concepts|g'
 
-
 # /recipes -> /docs/guides
 rg "\(/recipes" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/recipes|](/docs/guides|g'
 rg "=\"/recipes" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/recipes|="/docs/guides|g'
+
+# /deprecated -> /docs/reference/deprecated
+rg "\(/deprecated" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/deprecated|](/docs/reference/deprecated|g'
+rg "=\"/deprecated" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/deprecated|="/docs/reference/deprecated|g'
+
+# /troubleshooting -> /docs/troublshooting
+rg "\(/troubleshooting" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/troubleshooting|](/docs/troubleshooting|g'
+rg "=\"/troubleshooting" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/troubleshooting|="/docs/troubleshooting|g'
+
+# /plugin-registry -> /docs/plugin-registry
+rg "\(/plugin-registry" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/plugin-registry|](/docs/plugin-registry|g'
+rg "=\"/plugin-registry" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/plugin-registry|="/docs/plugin-registry|g'
 
 # /features -> /docs/features
 rg "\(/features" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/features|](/docs/features|g'
@@ -19,7 +30,6 @@ rg "=\"/features" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i ''
 # /tech -> /docs/tech
 rg "\(/tech" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/tech|](/docs/tech|g'
 rg "=\"/tech" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/tech|="/docs/tech|g'
-
 
 ## /recipes/running-tasks -> /docs/guides/tasks--caching
 rg "\(/recipes/running-tasks" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/recipes/running-tasks|](/docs/guides/tasks--caching|g'
@@ -37,24 +47,27 @@ rg "=\"/getting" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 
 rg "\(/ci/recipes/set-up" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/ci/recipes/set-up|](/docs/guides/nx-cloud/setup-ci|g'
 rg "=\"/ci/recipes/set-up" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/ci/recipes/set-up|="/docs/guides/nx-cloud/setup-ci|g'
 
+# /ci/reference/nx-cloud-cli -> /docs/reference/nx-cloud-cli
+rg "\(/ci/reference/nx-cloud-cli" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/ci/reference/nx-cloud-cli|](/docs/reference/nx-cloud-cli|g'
+rg "=\"/ci/reference/nx-cloud-cli" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/ci/reference/nx-cloud-cli|="/docs/reference/nx-cloud-cli|g'
 
 # /blog -> https://nx.dev/blog
 rg "\(/blog" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/blog|](https://nx.dev/blog|g'
 rg "=\"/blog" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/blog|="https://nx.dev/blog|g'
 
-
 # /enterprise -> https://nx.dev/enterprise
 rg "\(/enterprise" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/enterprise|](https://nx.dev/enterprise|g'
 rg "=\"/enterprise" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/enterprise|="https://nx.dev/enterprise|g'
-
 
 # /pricing -> https://nx.dev/pricing
 rg "\(/pricing" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/pricing|](https://nx.dev/pricing|g'
 rg "=\"/pricing" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/pricing|="https://nx.dev/pricing|g'
 
-
-# though these URLS that have `core-api` in them need to be special handled 
+# though these URLS that have `core-api` in them need to be special handled
 # but we can search for 'core-api' later and do a different replace mechinism
 # /reference -> /docs/reference
 rg "\(/reference" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|](/reference|](/docs/reference|g'
 rg "=\"/reference" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|="/reference|="/docs/reference|g'
+
+# /docs/reference/core-api/nx/documents/:command -> /docs/reference/nx-commands#:command
+rg "reference/core-api/nx/documents/" --type-add "mdoc:*mdoc" -t mdoc -l --null | xargs -0 sed -i '' 's|reference/core-api/nx/documents/|docs/reference/nx-commands#|g'
