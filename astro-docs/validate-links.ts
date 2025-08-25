@@ -1,6 +1,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { workspaceRoot } from '@nx/devkit';
+
+const ignoredLinks = [
+  '/reference/devkit',
+  // these are typically source from the plugin specific examples and can't change until we're pushing to canary
+  '/nx-api/',
+  '/reference/core-api',
+];
+
 const distDir = path.join(workspaceRoot, 'astro-docs', 'dist');
 const sitemapPath = path.join(distDir, 'sitemap-0.xml');
 
@@ -60,6 +68,7 @@ function extractInternalLinks(htmlContent: string, filePath: string) {
     ) {
       continue;
     }
+
     try {
       const cleanLink = new URL(href, 'http://localhost');
       links.add(cleanLink.pathname);
@@ -88,6 +97,11 @@ function parseSitemap(sitemapContent: string) {
   }
 
   return routes;
+}
+
+function toFriendlyName(file: string) {
+  // TODO: resolve to the actual markdown file if possile?
+  return path.relative(workspaceRoot, file);
 }
 
 function validateLinks() {
@@ -120,8 +134,18 @@ function validateLinks() {
     }
   }
 
-  const actualLinksUsed = new Set(linksToFiles.keys());
+  const filteredLinks = Array.from(linksToFiles.keys()).filter((href) => {
+    const includesIgnoredLink = ignoredLinks.some((il) => href.includes(il));
 
+    if (includesIgnoredLink) {
+      console.warn(`Skipping link since matching manual ignore list: ${href}`);
+    }
+
+    // filter out any manually ingored links
+    return !includesIgnoredLink;
+  });
+
+  const actualLinksUsed = new Set(filteredLinks);
   console.log(
     `Extracted ${actualLinksUsed.size} total internal links from ${htmlFiles.length} files\n`,
   );
@@ -142,6 +166,8 @@ function validateLinks() {
   if (brokenLinks.size > 0) {
     console.log(`Found ${brokenLinks.size} broken links:\n`);
 
+    const filesWithErrors = new Map<string, string[]>();
+
     brokenLinks.forEach((link) => {
       const files = linksToFiles.get(link);
 
@@ -150,15 +176,32 @@ function validateLinks() {
           `Unable to find file where link was parsed from: ${link}`,
         );
       }
-      console.log(`\n❌ ${link}. Used In:`);
-      files.forEach((file) =>
-        console.log(`\t- ${path.relative(distDir, file)}`),
-      );
+
+      files.forEach((f) => {
+        const existing = filesWithErrors.get(f);
+        if (existing) {
+          existing.push(link);
+          filesWithErrors.set(f, existing);
+        } else {
+          filesWithErrors.set(f, [link]);
+        }
+      });
     });
+
+    for (const [file, badLinks] of filesWithErrors) {
+      console.log(
+        `\n❌ ${toFriendlyName(file)} has ${badLinks.length} broken links:`,
+      );
+      badLinks.forEach((link) => console.log(`\t- ${link}`));
+    }
+
+    console.log(
+      `\n🔎 Check the above output to resolve the ${brokenLinks.size} broken links in each respecitve source (.mdoc, .astro, and/or content collection generation`,
+    );
+
     process.exit(1);
   }
 
   process.exit(0);
 }
-
 validateLinks();
