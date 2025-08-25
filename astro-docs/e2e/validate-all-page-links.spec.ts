@@ -46,7 +46,7 @@ sidebar.forEach((entry) => {
         const visitedLinks = await checkPageLinksValidity(
           page,
           'main-pane',
-          seenLinks,
+          seenLinks
         );
 
         visitedLinks.forEach((link) => seenLinks.add(link));
@@ -58,7 +58,7 @@ sidebar.forEach((entry) => {
 async function checkPageLinksValidity(
   page: Page,
   contentTestId: string,
-  linksToSkip: Set<string>,
+  linksToSkip: Set<string>
 ): Promise<Set<string>> {
   const passed = new Set<string>();
   const pageContent = page.getByTestId(contentTestId);
@@ -73,7 +73,7 @@ async function checkPageLinksValidity(
 
   const outbounds = await pageContent.getByRole('link').all();
   const linkSet = new Set(
-    await Promise.all(outbounds.map((link) => link.getAttribute('href'))),
+    await Promise.all(outbounds.map((link) => link.getAttribute('href')))
   );
 
   console.debug('Links to visit', Array.from(linkSet));
@@ -103,14 +103,14 @@ async function checkPageLinksValidity(
     await expect
       .soft(
         page.getByText('404: not found'),
-        `Trying to visit ${outboundLink}, but found Astro dev server 404 page. Came from ${visitingFrom}.`,
+        `Trying to visit ${outboundLink}, but found Astro dev server 404 page. Came from ${visitingFrom}.`
       )
       .toBeHidden({ timeout: 2_000 });
     // nx.dev 404 page
     await expect
       .soft(
         page.getByText('Page not found'),
-        `Trying to visit ${outboundLink}, but found Nx Dev 404 page. Came from ${visitingFrom}.`,
+        `Trying to visit ${outboundLink}, but found Nx Dev 404 page. Came from ${visitingFrom}.`
       )
       .toBeHidden({ timeout: 2_000 });
   }
@@ -141,7 +141,7 @@ async function expandSideBar(page: Page) {
 
       window.sessionStorage.setItem(
         'sl-sidebar-state',
-        JSON.stringify(parsedState),
+        JSON.stringify(parsedState)
       );
     }
   });

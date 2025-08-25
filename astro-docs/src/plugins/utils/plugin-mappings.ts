@@ -2,7 +2,7 @@ import { workspaceRoot } from '@nx/devkit';
 import { existsSync, lstatSync, readdirSync, readFileSync } from 'node:fs';
 import { basename, extname, join } from 'node:path';
 import frontMatter from 'front-matter';
-import type { SidebarSubItem } from 'astro-docs/src/utils/sidebar.types';
+import type { SidebarSubItem } from '../../utils/sidebar.types';
 
 /**
  * Map of plugins names to their technology grouping

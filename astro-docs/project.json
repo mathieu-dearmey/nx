@@ -56,9 +56,9 @@
     },
     "validate-links": {
       "command": "npx tsx validate-links.ts",
-        "options": {
-          "cwd": "astro-docs"
-        }
+      "options": {
+        "cwd": "astro-docs"
+      }
     }
   }
 }
