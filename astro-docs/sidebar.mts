@@ -38,7 +38,11 @@ export const sidebar: StarlightUserConfig['sidebar'] = [
         items: [
           ...getPluginItems('angular'),
           // TODO: angular rspack and rsbuild are special cases
+          // Plugin base path does not exist: /Users/caleb/Work/nrwl/nx/packages for plugin angular-rsbuild in category angular
+          // Location:
+          // astro-docs/src/plugins/utils/plugin-mappings.ts:93:11
           //
+          // {
           //   label: 'Angular Rspack',
           //   link: '/technologies/angular/angular-rspack/',
           //   items: getPluginItems('angular-rspack', 'angular'),

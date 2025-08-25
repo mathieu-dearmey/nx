@@ -58,7 +58,7 @@ inputs:
   - **main**: Path to the main script to run (only if `using` is `node`).
   - **post**: Path to the post script to run (only if `using` is `node`).
     - runs before the agent is cleaned up
-  - **steps**: A list of sub-steps to be executed (only if `using` is `aggregate`). Steps follow the same definition as [launch templates](/ci/reference/launch-templates#launch-template-structure).
+  - **steps**: A list of sub-steps to be executed (only if `using` is `aggregate`). Steps follow the same definition as [launch templates](/docs/reference/nx-cloud/launch-templates#launch-template-structure).
 
 - **inputs**:
   - **name**: The name of the input.
@@ -79,7 +79,7 @@ console.log(`The value of input1 is: ${input1}`);
 
 Once you've defined your custom step, you can use it in your launch templates by referencing the custom step file. Here's an example:
 
-{% aside type="check" title="Custom Step location" %}
+{% aside type="note" title="Custom Step location" %}
 When specifying the location for the custom step, you must include a branch or tag (e.g., `main`). Using a direct URL to the repository without a branch or tag will not work.
 {% /aside %}
 
