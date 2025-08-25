@@ -47,13 +47,6 @@
         "cwd": "astro-docs"
       }
     },
-    "pw-e2e": {
-      "dependsOn": ["serve"],
-      "parallelism": true
-    },
-    "e2e-ci--**/*": {
-      "dependsOn": ["preview"]
-    },
     "validate-links": {
       "command": "npx tsx validate-links.ts",
       "options": {

@@ -28,9 +28,6 @@
     },
     {
       "path": "../nx-dev/ui-common"
-    },
-    {
-      "path": "./tsconfig.e2e.json"
     }
   ]
 }
