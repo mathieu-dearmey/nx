@@ -65,7 +65,7 @@ The following resource classes are available:
 - `docker_linux_arm64/extra_large`
 - `windows/medium`
 
-See their detailed description and pricing in the [credits pricing reference](/docs/references/Cloud/credits-pricing).
+See their detailed description and pricing in the [credits pricing reference](/docs/reference/nx-cloud/credits-pricing).
 
 ### `launch-templates.<template-name>.image`
 
@@ -102,7 +102,7 @@ Nx Cloud provides the following images:
 
 > Note: Windows-based images can only run on Windows-based [resource classes](#launch-templatestemplate-nameresourceclass).
 
-Enterprise accounts [can use custom images](/docs/references/Cloud/custom-images).
+Enterprise accounts [can use custom images](/docs/reference/nx-cloud/custom-images).
 
 ### `launch-templates.<template-name>.env`
 
@@ -145,7 +145,7 @@ launch-templates:
 
 When defined, specifies an existing step file to be used. **Cannot be used when `script` is also defined**
 
-You can find the [list of Nx Cloud reusable steps here](https://github.com/nrwl/nx-cloud-workflows/tree/main/workflow-steps). If you cannot find a reusable step that suits your needs, [you can create your own custom steps](/docs/references/Cloud/custom-steps).
+You can find the [list of Nx Cloud reusable steps here](https://github.com/nrwl/nx-cloud-workflows/tree/main/workflow-steps). If you cannot find a reusable step that suits your needs, [you can create your own custom steps](/docs/reference/Cloud/custom-steps).
 
 ```yaml
 // .nx/workflows/agents.yaml
@@ -424,7 +424,7 @@ nx-cloud validate --workflow-file=./.nx/workflows/agents.yaml
 
 ## Pass Environment Variables
 
-If you need to send environment variables to agents, you can use the [--with-env-vars](/docs/references/nx-cloud-cli#withenvvars-nx-agents-only) flag on the `nx-cloud start-ci-run` command. You can pass a specific list of environment variables like this:
+If you need to send environment variables to agents, you can use the [--with-env-vars](/docs/reference/nx-cloud-cli#withenvvars-nx-agents-only) flag on the `nx-cloud start-ci-run` command. You can pass a specific list of environment variables like this:
 
 ```
 nx-cloud start-ci-run --distribute-on="8 linux-medium-js" --with-env-vars="VAR1,VAR2"
@@ -592,7 +592,7 @@ If you're trying to install a package that isn't available on `apt`, check that 
 
 ## AWS CLI
 
-First, define the environment variables on your main agent, where you call [`nx-cloud start-ci-run`](/docs/references/nx-cloud-cli#npx-nxcloud-startcirun). Pass the same environment variables to your agents via the [`--with-env-vars` flag](/docs/references/nx-cloud-cli#withenvvars-nx-agents-only).
+First, define the environment variables on your main agent, where you call [`nx-cloud start-ci-run`](/docs/reference/nx-cloud-cli#npx-nxcloud-startcirun). Pass the same environment variables to your agents via the [`--with-env-vars` flag](/docs/reference/nx-cloud-cli#withenvvars-nx-agents-only).
 
 Minimally the `AWS_REGION` (or `AWS_DEFAULT_REGION`), `AWS_ACCESS_KEY_ID`, and `AWS_SECRET_ACCESS_KEY` environment variables are required.
 

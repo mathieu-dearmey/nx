@@ -101,7 +101,7 @@ nx g @nx/vue:storybook-configuration my-vue-project
 
 These framework-specific generators will also **generate stories** and interaction tests for you.
 
-If you are NOT using a framework-specific generator (for [Angular](/docs/technologies/angular/api/generators/storybook-configuration), [React](/docs/technologies/react/api/generators/storybook-configuration), [Vue](/docs/technologies/vue/api/generators/storybook-configuration)), in the field `uiFramework` you must choose one of the following Storybook frameworks:
+If you are NOT using a framework-specific generator (for [Angular](/docs/technologies/angular/generators#storybook-configuration), [React](/docs/technologies/react/generators#storybook-configuration), [Vue](/docs/technologies/vue/generators#storybook-configuration)), in the field `uiFramework` you must choose one of the following Storybook frameworks:
 
 - `@storybook/angular`
 - `@storybook/nextjs`
@@ -122,7 +122,7 @@ Choosing one of these frameworks will have the following effects on your workspa
 
 3. Nx will create new `targets` in your project's `project.json`, called `storybook`, `test-storybook` and `build-storybook`, containing all the necessary configuration to serve, test and build Storybook.
 
-Make sure to **use the framework-specific generators** if your project is using Angular, React, Next.js, Vue, Nuxt, or React Native: [`@nx/angular:storybook-configuration`](/docs/technologies/angular/api/generators/storybook-configuration), [`@nx/react:storybook-configuration`](/docs/technologies/react/api/generators/storybook-configuration), [`@nx/vue:storybook-configuration`](/docs/technologies/vue/api/generators/storybook-configuration) as shown above.
+Make sure to **use the framework-specific generators** if your project is using Angular, React, Next.js, Vue, Nuxt, or React Native: [`@nx/angular:storybook-configuration`](/docs/technologies/angular/generators#storybook-configuration), [`@nx/react:storybook-configuration`](/docs/technologies/react/generators#storybook-configuration), [`@nx/vue:storybook-configuration`](/docs/technologies/vue/generators#storybook-configuration) as shown above.
 
 ### Running Storybook
 
@@ -233,5 +233,5 @@ For more on using Storybook, see the [official Storybook documentation](https://
 
 Here's more information on common migration scenarios for Storybook with Nx. For Storybook specific migrations that are not automatically handled by Nx please refer to the [official Storybook page](https://storybook.js.org/)
 
-- [Storybook 9 migration generator](/docs/technologies/test-tools/storybook/api/generators/migrate-9)
+- [Storybook 9 migration generator](/docs/technologies/test-tools/storybook/generators#migrate-9)
 - [Storybook 9 setup guide](/docs/technologies/test-tools/storybook/guides/storybook-9-setup)
